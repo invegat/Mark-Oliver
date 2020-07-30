@@ -1,0 +1,29 @@
+{
+  "name": "pp",
+  "version": "1.0.0",
+  "description": "personal web site for Mark Oliver",
+  "main": "server/index.js",
+  "repository": "https://git.heroku.com/mark-oliver.git",
+  "author": "Mark Oliver <mark.c.oliver@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "start": "node server",
+    "debug": "nodemon server",
+    "heroku-postbuild": "cd ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "ui/node_modules"
+  ],
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "morgan": "^1.10.0"
+  }
+}
