@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const gsFileEndpoints = require('./endpoints/gsfile');
 var dotenv = require('dotenv');
 dotenv.config();
 console.log(`test=${process.env.TEST}`)
@@ -54,6 +55,8 @@ if (!isDev && cluster.isMaster) {
       next();
     })
   }
+  server.use('/api/gs', gsFileEndpoints);
+
   // server.use(function(req, res, next) {
   //   res.header('Access-Control-Allow-Origin', '*');
   //   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -68,9 +71,11 @@ if (!isDev && cluster.isMaster) {
   });
 
   // All remaining requests return the React app, so it can handle routing.
-  server.get('/*', function (request, response) {
-    response.sendFile(path.resolve(__dirname, '../ui/build', 'index.html'));
-  });
+  if (process.env.NODE_ENV === 'production') {
+    server.get('/*', function (request, response) {
+      response.sendFile(path.resolve(__dirname, '../ui/build', 'index.html'));
+    });
+  }
 
   server.listen(PORT, function () {
     console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);

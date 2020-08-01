@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const GET_TEMPS = 'GET_TEMPS';
-export const GET_ERROR = 'GET_ERROR'
+export const GET_GS = 'GET_GS';
+export const GET_ERROR = 'GET_ERROR';
 
 /* eslint-disable no-console, semi-style */
 
@@ -18,39 +18,30 @@ const scotland_flag = "🏴󠁧󠁢󠁳󠁣󠁴󠁿";
 let port, host, http;
 if (process.env.NODE_ENV === 'production') {
   port = '';
-  host = ''
-  http = ''
+  host = '';
+  http = '';
 } else {
   port = 5000;
   host = "localhost:";
   http = 'http://';
 }
-export const authError = error => ({
+export const fileError = error => ({
   type: GET_ERROR,
   payload: error,
 });
 
-export const get_temps = (zip, history) => (dispatch) => {
-  // console.log(`${http}://${host}:${port}/api/weather/${zip}`);
-  // console.log(`in "get_temps" for ${JSON.stringify(zip, null, 2)}`);
+export const post_file = (formData, history) => (dispatch) => {
   axios
-    .get(`${http}${host}${port}/api/weather/${zip}`)
-    // .get(`:443/api/weather/${zip}`)
+    .post(`${http}${host}${port}/api/gs/fileUpload`, formData)
     .then((response) => {
-      // console.log(`in "get_temps" response for ${JSON.stringify(response, null, 2)}`);
-      // let t = response.data.alert
-      // let tc = t.replace(/\n/g,'<br/>')
-      // console.log('tc',tc)
-      // response.data.alert = tc;
-      console.log(`ra: ${JSON.stringify(response.data.ra[0], null, 2)}`)
       dispatch({
-        type: GET_TEMPS,
+        type: GET_GS,
         payload: response.data
       });
+
     })
     .catch((err) => {
-      // console.log(`"get_temps" ${err}`);
-      dispatch(authError('Failed to get_temps'));
+      dispatch(fileError("failed to upload file"))
     });
 };
 
