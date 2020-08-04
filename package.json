@@ -30,6 +30,7 @@
     "fs": "^0.0.1-security",
     "helmet": "^3.23.3",
     "jshint": "^2.11.2",
+    "ls-r": "^0.2.1",
     "mdbreact": "^4.27.0",
     "morgan": "^1.10.0",
     "prop-types": "^15.7.2",

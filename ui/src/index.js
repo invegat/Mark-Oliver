@@ -1,7 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import "./index.css";
+import App from "./App";
 import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -9,8 +12,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import reducers from './reducers';
-import * as serviceWorker from './serviceWorker';
 
+import registerServiceWorker from "./registerServiceWorker";
 
 const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 
@@ -22,10 +25,8 @@ ReactDOM.render(
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
-);
+)
 
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+
+registerServiceWorker();

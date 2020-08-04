@@ -18,7 +18,7 @@ const withTracker = (WrappedComponent, options = {}) => {
       trackPage(page);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const currentPage = this.props.location.pathname;
       const nextPage = nextProps.location.pathname;
 

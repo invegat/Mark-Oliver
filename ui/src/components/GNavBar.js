@@ -2,16 +2,22 @@
 /* eslint-disable react/destructuring-assignment, global-require */
 import React, { Component } from 'react';
 // import { LinkContainer } from 'react-router-bootstrap';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import {
-  Navbar,
-  NavbarBrand,
-  NavbarNav,
   // NavbarToggler,
   // Collapse,
   // Button,
-  NavItem,
-  NavLink,
+  MDBNavbar,
+  MDBNavbarBrand as NavbarBrand,
+  MDBNavbarNav as NavbarNav,
+  // MDBNavbarToggler,
+  // MDBCollapse,
+  MDBNavItem as NavItem,
+  // MDBFooter,
+  MDBNavLink as GNavLink,
+  // MDBTooltip,
+  //MDBIcon  
 } from 'mdbreact';
 
 import 'font-awesome/css/font-awesome.min.css';
@@ -19,7 +25,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import './css/navBar.css';
 
-export default class NavBar extends Component {
+export default class GNavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,19 +44,21 @@ export default class NavBar extends Component {
 
   render() {
     return (
-      <Navbar className="navbar-navbar" color="blue-grey darken-2" dark expand="md" scrolling>
-        <NavbarBrand href="/">
-          <img src={require('./graphics/Logo48x48.png')} alt="logo" />
+      <Router>
+        <MDBNavbar className="navbar-navbar" color="blue-grey darken-2" dark expand="md" scrolling>
+          <NavbarBrand href="/">
+            <img src={require('./graphics/Logo48x48.png')} alt="logo" />
 
-          <strong>Mark Oliver</strong>
-        </NavbarBrand>
-        {/* {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />} */}
+            <strong>Mark Oliver</strong>
+          </NavbarBrand>
+          {/* {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />} */}
+          {/*
 
         <NavbarNav left className="nav">
           <NavItem>
-            <NavLink exact className="nav-link" to="/" activeClassName="success-color">
+            <GNavLink exact className="nav-link" to="/" activeClassName="success-color">
               Home
-            </NavLink>
+            </GNavLink>
           </NavItem>
         </NavbarNav>
 
@@ -61,7 +69,9 @@ export default class NavBar extends Component {
               </NavLink>
           </NavItem>
         </NavbarNav>
-      </Navbar>
+        */}
+        </MDBNavbar>
+      </Router>
     );
   }
 }
