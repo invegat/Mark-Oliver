@@ -1,42 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { post_file } from '../actions';
-
+import Files from 'react-files'
+import './css/uploadGSFile.css';
 
 class UploadGSFile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null
+      selectedFile: null,
+      jsonFile: {},
     };
+    this.fileReader = new FileReader()
+    this.fileReader.onload = (event) => {
+
+      // or do whatever manipulation you want on JSON.parse(event.target.result) here.
+
+      this.setState({ jsonFile: JSON.parse(event.target.result) }, () => {
+        console.log('jsonFile', this.state.jsonFile);
+      });
+    };
+
   }
 
-  onFileChange = event => {
-    this.setState({ selectedFile: event.target.files[0] })
-  };
-
-  onFileUpload = () => {
-
-    // Create an object of formData 
-    const formData = new FormData();
-
-    // Details of the uploaded file 
-    console.log('selectedFile', JSON.stringify(this.state.selectedFile));
-
-    // Update the formData object 
-    formData.append(
-      "gsFile",
-      this.state.selectedFile,
-      this.state.selectedFile.name
-    );
-
-
-
-    // Request made to the backend api 
-    // Send formData object 
-    this.props.post_file(formData)
-
-  };
+  onFilesChange = (files) => {
+    this.setState({ selectedFile: files[0] });
+    console.log('files', files);
+  }
+  onFilesError = (error, file) => {
+    console.log('error code ' + error.code + ': ' + error.message)
+  }
 
   fileData = () => {
 
@@ -49,7 +42,9 @@ class UploadGSFile extends Component {
           <p>File Type: {this.state.selectedFile.type}</p>
           <p>
             Last Modified:{" "}
-            {this.state.selectedFile.lastModifiedDate.toDateString()}
+            {(new Date(this.state.selectedFile.lastModified)).toDateString()}
+            &nbsp;
+            {(new Date(this.state.selectedFile.lastModified)).toTimeString()}
           </p>
         </div>
       );
@@ -57,40 +52,54 @@ class UploadGSFile extends Component {
       return (
         <div>
           <br />
-          <h4>Choose before Pressing the Upload button</h4>
+          <h4>No File Loaded</h4>
         </div>
       );
     }
   };
 
-  render() {
 
+  render() {
     return (
-      <div>
+      <div className="Files">
         <h1>
           Gale–Shapley
         </h1>
         <h3>
           Input File Upload
         </h3>
-        <div>
-          <input type="file" onChange={this.onFileChange} />
-          <button onClick={this.onFileUpload}>
-            Upload!
-              </button>
-        </div>
+        <Files
+          className='files-dropzone'
+          accepts={['application/json']}
+          clickable
+          onChange={file => {
+            this.setState({ selectedFile: file[0] });
+            // we choose readAsText() to load our file, and onload
+            // event we rigister in this.fileReader would be triggered.
+            this.fileReader.readAsText(file[0]);
+          }}
+        >
+          Drop Gale-Shapley input files here or click to upload
+        </Files>
         {this.fileData()}
+        {/*
+          {
+            this.props.gsoutput.len > 0 && (
+              (this.props.gsoutput.map(vc => <div>{vc[0]}:</div>)
+
+
+              )}
+            */}
       </div>
-    );
+    )
   }
 }
 
-
-const mapDispatchToProps = dispatch => ({
-  post_file: file => dispatch(post_file(file))
-});
-
 export default connect(
-  null,
-  mapDispatchToProps
+  state => ({
+    gsoutput: state.gsoutput
+  }),
+  dispatch => ({
+    postFile: (file, history) => dispatch(post_file(file, history))
+  })
 )(UploadGSFile);

@@ -18,10 +18,8 @@ const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <MuiThemeProvider MuiTheme={getMuiTheme(darkBaseTheme)}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
-      </MuiThemeProvider>
+      <App />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

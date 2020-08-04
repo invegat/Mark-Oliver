@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import gsinputReducer from './gsinputReducer';
-const rootReducer = combineReducers({ gsinput: gsinputReducer })
+import gsOutPutReducer from './gsOutputReducer';
+const rootReducer = combineReducers({ gsoutput: gsOutPutReducer })
 
 export default rootReducer;

@@ -14,7 +14,9 @@ export default class Home extends Component {
     return (
       <div>
         <h1>Hello from Home</h1>
-        <Link to="/gsUpload"></Link>
+        <Link to="/gsUpload">
+          Upload Gale/Shapely Input File
+        </Link>
       </div>
     );
   };

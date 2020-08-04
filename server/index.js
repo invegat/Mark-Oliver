@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
+const GSTARGET = process.env.lambda
 // const weatherEndpoints = require('./endpoints/weatherEndPoints');
 
 console.log(`isDev: ${isDev}`)
@@ -49,11 +50,11 @@ if (!isDev && cluster.isMaster) {
       })
     );
 
-    server.use(function (req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      next();
-    })
+    // server.use(function (req, res, next) {
+    //   res.header("Access-Control-Allow-Origin", "*");
+    //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    //   next();
+    // })
   }
   server.use('/api/gs', gsFileEndpoints);
 
@@ -80,4 +81,8 @@ if (!isDev && cluster.isMaster) {
   server.listen(PORT, function () {
     console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);
   });
+}
+
+module.exports = {
+  GSTARGET: GSTARGET
 }

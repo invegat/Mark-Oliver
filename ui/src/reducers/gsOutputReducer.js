@@ -1,13 +1,13 @@
 import {
-  GET_GS
+  POST_GS
 } from '../actions';
 
-export default (gsinput = {}, action) => {
+export default (gsoutput = [], action) => {
   switch (action.type) {
-    case GET_GS:
+    case POST_GS:
       return action.payload;
     default:
-      return gsinput;
+      return gsoutput;
   }
 };
 

@@ -46,7 +46,7 @@ class App extends Component {
     return (
       <Router>
         <div className='App'>
-          <NavBar />
+          {/* <NavBar /> */}
           <div className="App--Body">
             <Route
               exact
